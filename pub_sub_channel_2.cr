@@ -45,6 +45,13 @@ class Publisher
 			i = i + 1
 		end
 	end
+
+	def wait_to_process
+		while(!@events_stream.empty?)
+		end
+		puts "closing stream"
+		@events_stream.close
+	end
 end
 
 class NotifyWorker
@@ -93,11 +100,10 @@ e2 = CustomEvent.new("event 2")
 e3 = CustomEvent.new("event 3")
 e4 = CustomEvent.new("event 4")
 
-sleep(5)
 publisher.catch_event(e1)
 publisher.catch_event(e2)
 publisher.catch_event(e3)
 publisher.catch_event(e4)
-sleep(5)
+publisher.wait_to_process
 # publisher.close_stream
 # publisher.catch_event(e2)
